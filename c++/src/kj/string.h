@@ -650,7 +650,7 @@ struct KJ_CLASS Stringifier {
   inline Result operator*(T&& value) const { return kj::fwd<T>(value).toString(); }
 #endif
 };
-KJ_API static KJ_CONSTEXPR(const) Stringifier STR = Stringifier();
+static KJ_CONSTEXPR(const) Stringifier STR = Stringifier();
 
 }  // namespace _ (private)
 

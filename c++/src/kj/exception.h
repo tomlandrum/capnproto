@@ -93,10 +93,10 @@ public:
   struct KJ_CLASS Context {
     // Describes a bit about what was going on when the exception was thrown.
 
-    KJ_API const char* file;
-    KJ_API int line;
-    KJ_API String description;
-    KJ_API Maybe<Own<Context>> next;
+    const char* file;
+    int line;
+    String description;
+    Maybe<Own<Context>> next;
 
     KJ_API Context(const char* file, int line, String&& description, Maybe<Own<Context>>&& next)
         : file(file), line(line), description(mv(description)), next(mv(next)) {}
@@ -186,7 +186,7 @@ enum class KJ_CLASS LogSeverity {
 
 KJ_API StringPtr KJ_STRINGIFY(LogSeverity severity);
 
-class KJ_CLASS KJ_CLASS ExceptionCallback {
+class KJ_CLASS ExceptionCallback {
   // If you don't like C++ exceptions, you may implement and register an ExceptionCallback in order
   // to perform your own exception handling.  For example, a reasonable thing to do is to have
   // onRecoverableException() set a flag indicating that an error occurred, and then check for that
@@ -256,13 +256,13 @@ public:
   // function itself receives, as its parameter, the thread's main function, which it must call.
 
 protected:
-  KJ_API ExceptionCallback& next;
+  ExceptionCallback& next;
 
 private:
   ExceptionCallback(ExceptionCallback& next);
 
   class RootExceptionCallback;
-  friend ExceptionCallback& getExceptionCallback();
+  friend KJ_API ExceptionCallback& getExceptionCallback();
 
   friend class Thread;
 };

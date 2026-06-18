@@ -793,14 +793,14 @@ public:
   }
 };
 
-KJ_API static KJ_CONSTEXPR(const) MaxValue_ maxValue = MaxValue_();
+static KJ_CONSTEXPR(const) MaxValue_ maxValue = MaxValue_();
 // A special constant which, when cast to an integer type, takes on the maximum possible value of
 // that type.  This is useful to use as e.g. a parameter to a function because it will be robust
 // in the face of changes to the parameter's type.
 //
 // `char` is not supported, but `signed char` and `unsigned char` are.
 
-KJ_API static KJ_CONSTEXPR(const) MinValue_ minValue = MinValue_();
+static KJ_CONSTEXPR(const) MinValue_ minValue = MinValue_();
 // A special constant which, when cast to an integer type, takes on the minimum possible value
 // of that type.  This is useful to use as e.g. a parameter to a function because it will be robust
 // in the face of changes to the parameter's type.
@@ -824,7 +824,7 @@ struct KJ_CLASS ThrowOverflow {
   // Functor which throws an exception complaining about integer overflow. Usually this is used
   // with the interfaces in units.h, but is defined here because Cap'n Proto wants to avoid
   // including units.h when not using CAPNP_DEBUG_TYPES.
-  KJ_API [[noreturn]] void operator()() const;
+  [[noreturn]] KJ_API void operator()() const;
 };
 
 #if __GNUC__ || __clang__ || _MSC_VER

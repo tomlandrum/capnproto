@@ -90,10 +90,10 @@ public:
   }
 #endif
 
-  KJ_API const char* fileName;
-  KJ_API const char* function;
-  KJ_API uint lineNumber;
-  KJ_API uint columnNumber;
+  const char* fileName;
+  const char* function;
+  uint lineNumber;
+  uint columnNumber;
 };
 
 KJ_API kj::String KJ_STRINGIFY(const SourceLocation& l);
@@ -104,7 +104,7 @@ class KJ_CLASS NoopSourceLocation {
   // isn't accidentally used in the wrong compilation context.
 };
 
-KJ_API KJ_UNUSED static kj::String KJ_STRINGIFY(const NoopSourceLocation& l) {
+KJ_UNUSED static kj::String KJ_STRINGIFY(const NoopSourceLocation& l) {
   return kj::String();
 }
 }  // namespace kj

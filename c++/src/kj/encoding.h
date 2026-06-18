@@ -188,10 +188,10 @@ struct KJ_CLASS DecodeUriOptions {
   KJ_API DecodeUriOptions(bool nulTerminate = false, bool plusToSpace = false)
       : nulTerminate(nulTerminate), plusToSpace(plusToSpace) {}
 
-  KJ_API bool nulTerminate;
+  bool nulTerminate;
   // Append a terminal NUL byte.
 
-  KJ_API bool plusToSpace;
+  bool plusToSpace;
   // Convert '+' to ' ' characters before percent decoding. Used to decode
   // application/x-www-form-urlencoded text, such as query strings.
 };
