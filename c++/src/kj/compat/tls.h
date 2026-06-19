@@ -68,26 +68,26 @@ public:
     KJ_TLS_API Options& operator=(Options&&) = default;
     // Options is a move-only value type.
 
-    KJ_TLS_API bool useSystemTrustStore;
+    bool useSystemTrustStore;
     // Whether or not to trust the system's default trust store. Default: true.
 
-    KJ_TLS_API bool verifyClients;
+    bool verifyClients;
     // If true, when acting as a server, require the client to present a certificate. The
     // certificate must be signed by one of the trusted CAs, otherwise the client will be rejected.
     // (Typically you should set `useSystemTrustStore` false when using this flag, and specify
     // your specific trusted CAs in `trustedCertificates`.)
     // Default: false
 
-    KJ_TLS_API kj::ArrayPtr<const TlsCertificate> trustedCertificates;
+    kj::ArrayPtr<const TlsCertificate> trustedCertificates;
     // Additional certificates which should be trusted. Default: none.
 
-    KJ_TLS_API TlsVersion minVersion;
+    TlsVersion minVersion;
     // Minimum version. Defaults to minimum version that hasn't been cryptographically broken.
     // If you override this, consider doing:
     //
     //     options.minVersion = kj::max(myVersion, options.minVersion);
 
-    KJ_TLS_API kj::StringPtr cipherList;
+    kj::StringPtr cipherList;
     // OpenSSL cipher list string. The default is a curated list designed to be compatible with
     // almost all software in current use (specifically, based on Mozilla's "intermediate"
     // recommendations). The defaults will change in future versions of this library to account
@@ -98,20 +98,20 @@ public:
     //   algorithms.
     // - You need quickly to disable an algorithm recently discovered to be broken.
 
-    KJ_TLS_API kj::Maybe<const TlsKeypair&> defaultKeypair;
+    kj::Maybe<const TlsKeypair&> defaultKeypair;
     // Default keypair to use for all connections. Required for servers; optional for clients.
 
-    KJ_TLS_API kj::Maybe<TlsSniCallback&> sniCallback;
+    kj::Maybe<TlsSniCallback&> sniCallback;
     // Callback that can be used to choose a different key/certificate based on the specific
     // hostname requested by the client.
 
-    KJ_TLS_API kj::Maybe<kj::Timer&> timer;
+    kj::Maybe<kj::Timer&> timer;
     // The timer used for `acceptTimeout` below.
 
-    KJ_TLS_API kj::Maybe<kj::Duration> acceptTimeout;
+    kj::Maybe<kj::Duration> acceptTimeout;
     // Timeout applied to accepting a new TLS connection. `timer` is required if this is set.
 
-    KJ_TLS_API kj::Maybe<TlsErrorHandler> acceptErrorHandler;
+    kj::Maybe<TlsErrorHandler> acceptErrorHandler;
     // Error handler used for TLS accept errors.
   };
 
@@ -247,8 +247,8 @@ private:
 struct KJ_TLS_CLASS TlsKeypair {
   // A pair of a private key and a certificate, for use by a server.
 
-  KJ_TLS_API TlsPrivateKey privateKey;
-  KJ_TLS_API TlsCertificate certificate;
+  TlsPrivateKey privateKey;
+  TlsCertificate certificate;
 };
 
 class KJ_TLS_CLASS TlsSniCallback {

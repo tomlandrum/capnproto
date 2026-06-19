@@ -50,23 +50,23 @@ public:
   struct CAPNP_CAPNPC_CLASS ResolvedDecl {
     // Information about a resolved declaration.
 
-    CAPNP_CAPNPC_API uint64_t id;
+    uint64_t id;
     // Type ID / node ID of the resolved declaration.
 
-    CAPNP_CAPNPC_API uint genericParamCount;
+    uint genericParamCount;
     // If non-zero, the declaration is a generic with the given number of parameters.
 
-    CAPNP_CAPNPC_API uint64_t scopeId;
+    uint64_t scopeId;
     // The ID of the parent scope of this declaration.
 
-    CAPNP_CAPNPC_API Declaration::Which kind;
+    Declaration::Which kind;
     // What basic kind of declaration is this? E.g. struct, interface, const, etc.
 
-    CAPNP_CAPNPC_API Resolver* resolver;
+    Resolver* resolver;
     // `Resolver` instance that can be used to further resolve other declarations relative to this
     // one.
 
-    CAPNP_CAPNPC_API kj::Maybe<schema::Brand::Reader> brand;
+    kj::Maybe<schema::Brand::Reader> brand;
     // If present, then it is necessary to replace the brand scope with the given brand before
     // using the target type. This happens when the decl resolved to an alias; all other fields
     // of `ResolvedDecl` refer to the target of the alias, except for `scopeId` which is the
@@ -74,8 +74,8 @@ public:
   };
 
   struct CAPNP_CAPNPC_CLASS ResolvedParameter {
-    CAPNP_CAPNPC_API uint64_t id;  // ID of the node declaring the parameter.
-    CAPNP_CAPNPC_API uint index;   // Index of the parameter.
+    uint64_t id;  // ID of the node declaring the parameter.
+    uint index;   // Index of the parameter.
   };
 
   typedef kj::OneOf<ResolvedDecl, ResolvedParameter> ResolveResult;

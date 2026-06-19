@@ -730,28 +730,28 @@ inline const T& Lazy<T>::get(Func&& init, LockSourceLocationArg location) const 
 
 #if KJ_TRACK_LOCK_BLOCKING
 struct KJ_CLASS BlockedOnMutexAcquisition {
-  KJ_API const _::Mutex& mutex;
+  const _::Mutex& mutex;
   // The mutex we are blocked on.
 
-  KJ_API const SourceLocation& origin;
+  const SourceLocation& origin;
   // Where did the blocking operation originate from.
 };
 
 struct KJ_CLASS BlockedOnCondVarWait {
-  KJ_API const _::Mutex& mutex;
+  const _::Mutex& mutex;
   // The mutex the condition variable is using (may or may not be locked).
 
-  KJ_API const void* waiter;
+  const void* waiter;
   // Pointer to the waiter that's being waited on.
 
-  KJ_API const SourceLocation& origin;
+  const SourceLocation& origin;
   // Where did the blocking operation originate from.
 };
 
 struct KJ_CLASS BlockedOnOnceInit {
-  KJ_API const _::Once& once;
+  const _::Once& once;
 
-  KJ_API const SourceLocation& origin;
+  const SourceLocation& origin;
   // Where did the blocking operation originate from.
 };
 

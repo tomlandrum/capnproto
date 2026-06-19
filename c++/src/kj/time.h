@@ -45,13 +45,13 @@ static constexpr size_t TIME_STR_LEN = sizeof(int64_t) * 3 + 8;
 using Duration = Quantity<int64_t, _::NanosecondLabel>;
 // A time value, in nanoseconds.
 
-KJ_API constexpr Duration NANOSECONDS = unit<Duration>();
-KJ_API constexpr Duration MICROSECONDS = 1000 * NANOSECONDS;
-KJ_API constexpr Duration MILLISECONDS = 1000 * MICROSECONDS;
-KJ_API constexpr Duration SECONDS = 1000 * MILLISECONDS;
-KJ_API constexpr Duration MINUTES = 60 * SECONDS;
-KJ_API constexpr Duration HOURS = 60 * MINUTES;
-KJ_API constexpr Duration DAYS = 24 * HOURS;
+constexpr Duration NANOSECONDS = unit<Duration>();
+constexpr Duration MICROSECONDS = 1000 * NANOSECONDS;
+constexpr Duration MILLISECONDS = 1000 * MICROSECONDS;
+constexpr Duration SECONDS = 1000 * MILLISECONDS;
+constexpr Duration MINUTES = 60 * SECONDS;
+constexpr Duration HOURS = 60 * MINUTES;
+constexpr Duration DAYS = 24 * HOURS;
 
 using TimePoint = Absolute<Duration, _::TimeLabel>;
 // An absolute time measured by some particular instance of `Timer` or `MonotonicClock`. `Time`s
@@ -65,7 +65,7 @@ KJ_API CappedArray<char, _::TIME_STR_LEN> KJ_STRINGIFY(TimePoint);
 KJ_API CappedArray<char, _::TIME_STR_LEN> KJ_STRINGIFY(Date);
 KJ_API CappedArray<char, _::TIME_STR_LEN> KJ_STRINGIFY(Duration);
 
-KJ_API constexpr Date UNIX_EPOCH = origin<Date>();
+constexpr Date UNIX_EPOCH = origin<Date>();
 // The `Date` representing Jan 1, 1970 00:00:00 UTC.
 
 class KJ_CLASS Clock {

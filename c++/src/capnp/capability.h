@@ -85,11 +85,11 @@ struct CAPNP_CLASS Capability {
 
   struct CAPNP_CLASS _capnpPrivate {
     struct IsInterface;
-    CAPNP_API static constexpr uint64_t typeId = 0x3;
-    CAPNP_API static constexpr Kind kind = Kind::INTERFACE;
-    CAPNP_API static constexpr _::RawSchema const* schema = &_::NULL_INTERFACE_SCHEMA;
+    static constexpr uint64_t typeId = 0x3;
+    static constexpr Kind kind = Kind::INTERFACE;
+    static constexpr _::RawSchema const* schema = &_::NULL_INTERFACE_SCHEMA;
 
-    CAPNP_API static const _::RawBrandedSchema* brand() {
+    static const _::RawBrandedSchema* brand() {
       return &_::NULL_INTERFACE_SCHEMA.defaultBrand;
     }
   };
@@ -247,11 +247,11 @@ public:
   // the capability does not resolve, the call results will propagate the error.
 
   struct CAPNP_CLASS CallHints {
-    CAPNP_API bool noPromisePipelining = false;
+    bool noPromisePipelining = false;
     // Hints that the pipeline part of the VoidPromiseAndPipeline won't be used, so it can be
     // a bogus object.
 
-    CAPNP_API bool onlyPromisePipeline = false;
+    bool onlyPromisePipeline = false;
     // Hints that the promise part of the VoidPromiseAndPipeline won't be used, so it can be a
     // bogus promise.
     //
@@ -296,7 +296,7 @@ protected:
 private:
   kj::Own<ClientHook> hook;
 
-  CAPNP_API static kj::Own<ClientHook> makeLocalClient(kj::Own<Capability::Server>&& server);
+  static kj::Own<ClientHook> makeLocalClient(kj::Own<Capability::Server>&& server);
   static kj::Own<ClientHook> makeRevocableLocalClient(Capability::Server& server);
   static void revokeLocalClient(ClientHook& hook);
   static void revokeLocalClient(ClientHook& hook, kj::Exception&& reason);
@@ -483,15 +483,15 @@ public:
   typedef Capability Serves;
 
   struct CAPNP_CLASS DispatchCallResult {
-    CAPNP_API kj::Promise<void> promise;
+    kj::Promise<void> promise;
     // Promise for completion of the call.
 
-    CAPNP_API bool isStreaming;
+    bool isStreaming;
     // If true, this method was declared as `-> stream;`. No other calls should be permitted until
     // this call finishes, and if this call throws an exception, all future calls will throw the
     // same exception.
 
-    CAPNP_API bool allowCancellation = false;
+    bool allowCancellation = false;
     // If true, the call can be canceled normally. If false, the immediate caller is responsible
     // for ensuring that cancellation is prevented and that `context` remains valid until the
     // call completes normally.
@@ -779,8 +779,8 @@ public:
   // This version is used when calls are made from application code in the local process.
 
   struct CAPNP_CLASS VoidPromiseAndPipeline {
-    CAPNP_API kj::Promise<void> promise;
-    CAPNP_API kj::Own<PipelineHook> pipeline;
+    kj::Promise<void> promise;
+    kj::Own<PipelineHook> pipeline;
   };
 
   CAPNP_API virtual VoidPromiseAndPipeline call(uint64_t interfaceId, uint16_t methodId,
@@ -829,8 +829,8 @@ public:
   // discover when a capability it needs to marshal is one that it created in the first place, and
   // therefore it can transfer the capability without proxying.
 
-  CAPNP_API static const uint NULL_CAPABILITY_BRAND;
-  CAPNP_API static const uint BROKEN_CAPABILITY_BRAND;
+  static const uint NULL_CAPABILITY_BRAND;
+  static const uint BROKEN_CAPABILITY_BRAND;
   // Values are irrelevant; used for pointers.
 
   CAPNP_API inline bool isNull() { return getBrand() == &NULL_CAPABILITY_BRAND; }
@@ -1231,8 +1231,8 @@ void RevocableServer<T>::revoke(kj::Exception&& exception) {
 namespace _ { // private
 
 struct CAPNP_CLASS PipelineBuilderPair {
-  CAPNP_API AnyPointer::Builder root;
-  CAPNP_API kj::Own<PipelineHook> hook;
+  AnyPointer::Builder root;
+  kj::Own<PipelineHook> hook;
 };
 
 CAPNP_API PipelineBuilderPair newPipelineBuilder(uint firstSegmentWords);

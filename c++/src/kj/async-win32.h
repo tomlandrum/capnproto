@@ -60,8 +60,8 @@ public:
   // overlapped I/O
 
   struct KJ_ASYNC_CLASS IoResult {
-    KJ_ASYNC_API DWORD errorCode;
-    KJ_ASYNC_API DWORD bytesTransferred;
+    DWORD errorCode;
+    DWORD bytesTransferred;
   };
 
   class KJ_ASYNC_CLASS IoOperation {

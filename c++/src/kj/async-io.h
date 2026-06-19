@@ -233,8 +233,8 @@ public:
   // probably a bad idea.
 
   struct KJ_ASYNC_CLASS ReadResult {
-    KJ_ASYNC_API size_t byteCount;
-    KJ_ASYNC_API size_t capCount;
+    size_t byteCount;
+    size_t capCount;
   };
 
   KJ_ASYNC_API virtual Promise<ReadResult> tryReadWithFds(void* buffer, size_t minBytes,
@@ -277,8 +277,8 @@ public:
 struct KJ_ASYNC_CLASS OneWayPipe {
   // A data pipe with an input end and an output end.  (Typically backed by pipe() system call.)
 
-  KJ_ASYNC_API Own<AsyncInputStream> in;
-  KJ_ASYNC_API Own<AsyncOutputStream> out;
+  Own<AsyncInputStream> in;
+  Own<AsyncOutputStream> out;
 };
 
 KJ_ASYNC_API OneWayPipe newOneWayPipe(kj::Maybe<uint64_t> expectedLength = nullptr);
@@ -292,7 +292,7 @@ struct KJ_ASYNC_CLASS TwoWayPipe {
   // A data pipe that supports sending in both directions.  Each end's output sends data to the
   // other end's input.  (Typically backed by socketpair() system call.)
 
-  KJ_ASYNC_API Own<AsyncIoStream> ends[2];
+  Own<AsyncIoStream> ends[2];
 };
 
 KJ_ASYNC_API TwoWayPipe newTwoWayPipe();
@@ -302,7 +302,7 @@ KJ_ASYNC_API TwoWayPipe newTwoWayPipe();
 struct KJ_ASYNC_CLASS CapabilityPipe {
   // Like TwoWayPipe but allowing capability-passing.
 
-  KJ_ASYNC_API Own<AsyncCapabilityStream> ends[2];
+  Own<AsyncCapabilityStream> ends[2];
 };
 
 KJ_ASYNC_API CapabilityPipe newCapabilityPipe();
@@ -318,7 +318,7 @@ KJ_ASYNC_API CapabilityPipe newCapabilityPipe();
 struct KJ_ASYNC_CLASS Tee {
   // Two AsyncInputStreams which each read the same data from some wrapped inner AsyncInputStream.
 
-  KJ_ASYNC_API Own<AsyncInputStream> branches[2];
+  Own<AsyncInputStream> branches[2];
 };
 
 KJ_ASYNC_API Tee newTee(Own<AsyncInputStream> input, uint64_t limit = kj::maxValue);
@@ -361,10 +361,10 @@ struct KJ_ASYNC_CLASS AuthenticatedStream {
   // A pair of an `AsyncIoStream` and a `PeerIdentity`. This is used as the return type of
   // `NetworkAddress::connectAuthenticated()` and `ConnectionReceiver::acceptAuthenticated()`.
 
-  KJ_ASYNC_API Own<AsyncIoStream> stream;
+  Own<AsyncIoStream> stream;
   // The byte stream.
 
-  KJ_ASYNC_API Own<PeerIdentity> peerIdentity;
+  Own<PeerIdentity> peerIdentity;
   // An object indicating who is at the other end of the stream.
   //
   // Different subclasses of `PeerIdentity` are used in different situations:
@@ -393,7 +393,7 @@ public:
   // same as the `NetworkPeerIdentity`, but you can always call `clone()` on it to get a copy that
   // lives longer.
 
-  KJ_ASYNC_API static kj::Own<NetworkPeerIdentity> newInstance(kj::Own<NetworkAddress> addr);
+  static kj::Own<NetworkPeerIdentity> newInstance(kj::Own<NetworkAddress> addr);
   // Construct an instance of this interface wrapping the given address.
 };
 
@@ -404,8 +404,8 @@ class KJ_ASYNC_CLASS LocalPeerIdentity: public PeerIdentity {
   // (This interface probably isn't useful on Windows.)
 public:
   struct KJ_ASYNC_CLASS Credentials {
-    KJ_ASYNC_API kj::Maybe<int> pid;
-    KJ_ASYNC_API kj::Maybe<uint> uid;
+    kj::Maybe<int> pid;
+    kj::Maybe<uint> uid;
 
     // We don't cover groups at present because some systems produce a list of groups while others
     // only provide the peer's main group, the latter being pretty useless.
@@ -425,13 +425,13 @@ public:
   //
   // On Linux this is implemented with SO_PEERCRED.
 
-  KJ_ASYNC_API static kj::Own<LocalPeerIdentity> newInstance(Credentials creds);
+  static kj::Own<LocalPeerIdentity> newInstance(Credentials creds);
   // Construct an instance of this interface wrapping the given credentials.
 };
 
 class KJ_ASYNC_CLASS UnknownPeerIdentity: public PeerIdentity {
 public:
-  KJ_ASYNC_API static kj::Own<UnknownPeerIdentity> newInstance();
+  static kj::Own<UnknownPeerIdentity> newInstance();
   // Get an instance of this interface. This actually always returns the same instance with no
   // memory allocation.
 };
@@ -541,11 +541,11 @@ public:
   // Get the datagram sender's address.
 
   struct KJ_ASYNC_CLASS Capacity {
-    KJ_ASYNC_API size_t content = 8192;
+    size_t content = 8192;
     // How much space to allocate for the datagram content. If a datagram is received that is
     // larger than this, it will be truncated, with no way to recover the tail.
 
-    KJ_ASYNC_API size_t ancillary = 0;
+    size_t ancillary = 0;
     // How much space to allocate for ancillary messages. As with content, if the ancillary data
     // is larger than this, it will be truncated.
   };
@@ -754,8 +754,8 @@ public:
     // disconnected) before the thread is destroyed (and therefore joined).  Thus if the thread
     // arranges to exit when it detects disconnect, destruction should be clean.
 
-    KJ_ASYNC_API Own<Thread> thread;
-    KJ_ASYNC_API Own<AsyncIoStream> pipe;
+    Own<Thread> thread;
+    Own<AsyncIoStream> pipe;
   };
 
   KJ_ASYNC_API virtual PipeThread newPipeThread(
@@ -868,7 +868,7 @@ public:
     // Returns true if incoming connections or datagrams from the given peer should be accepted.
     // If false, they will be dropped. This is used to implement kj::Network::restrictPeers().
 
-    KJ_ASYNC_API static NetworkFilter& getAllAllowed();
+    static NetworkFilter& getAllAllowed();
   };
 
   KJ_ASYNC_API virtual Own<ConnectionReceiver> wrapListenSocketFd(
@@ -927,14 +927,14 @@ KJ_ASYNC_API Own<AsyncIoProvider> newAsyncIoProvider(LowLevelAsyncIoProvider& lo
 // Make a new AsyncIoProvider wrapping a `LowLevelAsyncIoProvider`.
 
 struct KJ_ASYNC_CLASS AsyncIoContext {
-  KJ_ASYNC_API Own<LowLevelAsyncIoProvider> lowLevelProvider;
-  KJ_ASYNC_API Own<AsyncIoProvider> provider;
-  KJ_ASYNC_API WaitScope& waitScope;
+  Own<LowLevelAsyncIoProvider> lowLevelProvider;
+  Own<AsyncIoProvider> provider;
+  WaitScope& waitScope;
 
 #if _WIN32
-  KJ_ASYNC_API Win32EventPort& win32EventPort;
+  Win32EventPort& win32EventPort;
 #else
-  KJ_ASYNC_API UnixEventPort& unixEventPort;
+  UnixEventPort& unixEventPort;
   // TEMPORARY: Direct access to underlying UnixEventPort, mainly for waiting on signals. This
   //   field will go away at some point when we have a chance to improve these interfaces.
 #endif

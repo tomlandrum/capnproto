@@ -224,6 +224,15 @@ while [ $# -gt 0 ]; do
       doit make -j$PARALLEL check
       exit 0
       ;;
+    cmake-shared )
+      cd c++
+      rm -rf cmake-build
+      mkdir cmake-build
+      cd cmake-build
+      doit cmake -G "Unix Makefiles" -DBUILD_SHARED_LIBS=ON ..
+      doit make -j$PARALLEL check
+      exit 0
+      ;;
     cmake-package )
       # Test that a particular configuration of Cap'n Proto can be discovered and configured against
       # by a CMake project using the find_package() command. This is currently implemented by

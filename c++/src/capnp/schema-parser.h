@@ -278,9 +278,9 @@ public:
   // optimization used to avoid the need to re-parse a file to check its ID.
 
   struct CAPNP_CAPNPC_CLASS SourcePos {
-    CAPNP_CAPNPC_API uint byte;
-    CAPNP_CAPNPC_API uint line;
-    CAPNP_CAPNPC_API uint column;
+    uint byte;
+    uint line;
+    uint column;
   };
   CAPNP_CAPNPC_API virtual void reportError(SourcePos start, SourcePos end,
                                             kj::StringPtr message) const = 0;

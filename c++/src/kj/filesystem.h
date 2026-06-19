@@ -344,22 +344,22 @@ public:
   };
 
   struct KJ_CLASS Metadata {
-    KJ_API Type type = Type::FILE;
+    Type type = Type::FILE;
 
-    KJ_API uint64_t size = 0;
+    uint64_t size = 0;
     // Logical size of the file.
 
-    KJ_API uint64_t spaceUsed = 0;
+    uint64_t spaceUsed = 0;
     // Physical size of the file on disk. May be smaller for sparse files, or larger for
     // pre-allocated files.
 
-    KJ_API Date lastModified = UNIX_EPOCH;
+    Date lastModified = UNIX_EPOCH;
     // Last modification time of the file.
 
-    KJ_API uint linkCount = 1;
+    uint linkCount = 1;
     // Number of hard links pointing to this node.
 
-    KJ_API uint64_t hashCode = 0;
+    uint64_t hashCode = 0;
     // Hint which can be used to determine if two FsNode instances point to the same underlying
     // file object. If two FsNodes report different hashCodes, then they are not the same object.
     // If they report the same hashCode, then they may or may not be the same object.
@@ -536,8 +536,8 @@ public:
   // List the contents of this directory. Does NOT include "." nor "..".
 
   struct KJ_CLASS Entry {
-    KJ_API FsNode::Type type;
-    KJ_API String name;
+    FsNode::Type type;
+    String name;
 
     KJ_API inline bool operator< (const Entry& other) const { return name <  other.name; }
     KJ_API inline bool operator> (const Entry& other) const { return name >  other.name; }

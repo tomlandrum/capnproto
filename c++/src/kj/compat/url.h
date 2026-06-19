@@ -37,11 +37,11 @@ struct KJ_HTTP_CLASS UrlOptions {
   // A copy of this options struct will be stored in the parsed Url object, at which point it
   // controls the behavior of the serializer in Url::toString().
 
-  KJ_HTTP_API bool percentDecode = true;
+  bool percentDecode = true;
   // True if URL components should be automatically percent-decoded during parsing, and
   // percent-encoded during serialization.
 
-  KJ_HTTP_API bool allowEmpty = false;
+  bool allowEmpty = false;
   // Whether or not to allow empty path and query components when parsing; otherwise, they are
   // silently removed. In other words, setting this false causes consecutive slashes in the path or
   // consecutive ampersands in the query to be collapsed into one, whereas if true then they
@@ -53,24 +53,24 @@ struct KJ_HTTP_CLASS Url {
   //
   // Can be parsed from a string and composed back into a string.
 
-  KJ_HTTP_API String scheme;
+  String scheme;
   // E.g. "http", "https".
 
   struct KJ_HTTP_CLASS UserInfo {
-    KJ_HTTP_API String username;
-    KJ_HTTP_API Maybe<String> password;
+    String username;
+    Maybe<String> password;
   };
 
-  KJ_HTTP_API Maybe<UserInfo> userInfo;
+  Maybe<UserInfo> userInfo;
   // Username / password.
 
-  KJ_HTTP_API String host;
+  String host;
   // Hostname, including port if specified. We choose not to parse out the port because KJ's
   // network address parsing functions already accept addresses containing port numbers, and
   // because most web standards don't actually want to separate host and port.
 
-  KJ_HTTP_API Vector<String> path;
-  KJ_HTTP_API bool hasTrailingSlash = false;
+  Vector<String> path;
+  bool hasTrailingSlash = false;
   // Path, split on '/' characters. Note that the individual components of `path` could contain
   // '/' characters if they were percent-encoded in the original URL.
   //
@@ -79,10 +79,10 @@ struct KJ_HTTP_CLASS Url {
   // components.
 
   struct KJ_HTTP_CLASS QueryParam {
-    KJ_HTTP_API String name;
-    KJ_HTTP_API String value;
+    String name;
+    String value;
   };
-  KJ_HTTP_API Vector<QueryParam> query;
+  Vector<QueryParam> query;
   // Query, e.g. from "?key=value&key2=value2". If a component of the query contains no '=' sign,
   // it will be parsed as a key with a null value, and later serialized with no '=' sign if you call
   // Url::toString().
@@ -93,11 +93,11 @@ struct KJ_HTTP_CLASS Url {
   //     QueryParam { kj::str("name"), nullptr }      // Null-valued; will not have an '=' sign.
   //     QueryParam { kj::str("name"), kj::str("") }  // Empty-valued; WILL have an '=' sign.
 
-  KJ_HTTP_API Maybe<String> fragment;
+  Maybe<String> fragment;
   // The stuff after the '#' character (not including the '#' character itself), if present.
 
   using Options = UrlOptions;
-  KJ_HTTP_API Options options;
+  Options options;
 
   // ---------------------------------------------------------------------------
 

@@ -132,7 +132,8 @@ public:
 
 class SegmentReader {
 public:
-  inline SegmentReader(Arena* arena, SegmentId id, const word* ptr, SegmentWordCount size,
+  inline SegmentReader(Arena* arena, SegmentId id, const word* ptr,
+                       SegmentWordCount size,
                        ReadLimiter* readLimiter);
 
   KJ_ALWAYS_INLINE(const word* checkOffset(const word* from, ptrdiff_t offset));
@@ -319,8 +320,8 @@ public:
   // Get the segment with the given id.  Crashes or throws an exception if no such segment exists.
 
   struct CAPNP_CLASS AllocateResult {
-    CAPNP_API SegmentBuilder* segment;
-    CAPNP_API word* words;
+    SegmentBuilder* segment;
+    word* words;
   };
 
   CAPNP_API AllocateResult allocate(SegmentWordCount amount);

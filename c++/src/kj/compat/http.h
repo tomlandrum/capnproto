@@ -170,7 +170,7 @@ public:
   // TODO(someday): Fill this out with more common headers.
 
 #define DECLARE_HEADER(id, name) \
-  KJ_HTTP_API static const HttpHeaderId id;
+  static const HttpHeaderId id;
   // Declare a constant for each builtin header, e.g.: HttpHeaderId::CONNECTION
 
   KJ_HTTP_FOR_EACH_BUILTIN_HEADER(DECLARE_HEADER);
@@ -365,15 +365,15 @@ public:
   // when you've passed a dynamic value to set() or add() or parse*().
 
   struct KJ_HTTP_CLASS Request {
-    KJ_HTTP_API HttpMethod method;
-    KJ_HTTP_API kj::StringPtr url;
+    HttpMethod method;
+    kj::StringPtr url;
   };
   struct KJ_HTTP_CLASS ConnectRequest {
-    KJ_HTTP_API kj::StringPtr authority;
+    kj::StringPtr authority;
   };
   struct KJ_HTTP_CLASS Response {
-    KJ_HTTP_API uint statusCode;
-    KJ_HTTP_API kj::StringPtr statusText;
+    uint statusCode;
+    kj::StringPtr statusText;
   };
 
   struct KJ_HTTP_CLASS ProtocolError {
@@ -386,18 +386,18 @@ public:
     //   Or HttpProtocolError? Or maybe we need a more general way of attaching sensitive context to
     //   kj::Exceptions?
 
-    KJ_HTTP_API uint statusCode;
+    uint statusCode;
     // Suggested HTTP status code that should be used when returning an error to the client.
     //
     // Most errors are 400. An unrecognized method will be 501.
 
-    KJ_HTTP_API kj::StringPtr statusMessage;
+    kj::StringPtr statusMessage;
     // HTTP status message to go with `statusCode`, e.g. "Bad Request".
 
-    KJ_HTTP_API kj::StringPtr description;
+    kj::StringPtr description;
     // An error description safe for all the world to see.
 
-    KJ_HTTP_API kj::ArrayPtr<char> rawContent;
+    kj::ArrayPtr<char> rawContent;
     // Unredacted data which led to the error condition. This may contain anything transported over
     // HTTP, to include sensitive PII, so you must take care to sanitize this before using it in any
     // error report that may leak to unprivileged eyes.
@@ -452,15 +452,15 @@ public:
 
   struct KJ_HTTP_CLASS BuiltinIndices {
   #define HEADER_ID(id, name) \
-    KJ_HTTP_API static constexpr uint id = static_cast<uint>(BuiltinIndicesEnum::id);
+    static constexpr uint id = static_cast<uint>(BuiltinIndicesEnum::id);
     KJ_HTTP_FOR_EACH_BUILTIN_HEADER(HEADER_ID)
   #undef HEADER_ID
   };
 
-  KJ_HTTP_API static constexpr uint HEAD_RESPONSE_CONNECTION_HEADERS_COUNT =
+  static constexpr uint HEAD_RESPONSE_CONNECTION_HEADERS_COUNT =
       BuiltinIndices::CONTENT_LENGTH;
-  KJ_HTTP_API static constexpr uint CONNECTION_HEADERS_COUNT = BuiltinIndices::SEC_WEBSOCKET_KEY;
-  KJ_HTTP_API static constexpr uint WEBSOCKET_CONNECTION_HEADERS_COUNT = BuiltinIndices::HOST;
+  static constexpr uint CONNECTION_HEADERS_COUNT = BuiltinIndices::SEC_WEBSOCKET_KEY;
+  static constexpr uint WEBSOCKET_CONNECTION_HEADERS_COUNT = BuiltinIndices::HOST;
   // Constants for use with HttpHeaders::serialize*().
 
   KJ_HTTP_API kj::String toString() const;
@@ -505,10 +505,10 @@ class KJ_HTTP_CLASS HttpInputStream {
 
 public:
   struct KJ_HTTP_CLASS Request {
-    KJ_HTTP_API HttpMethod method;
-    KJ_HTTP_API kj::StringPtr url;
-    KJ_HTTP_API const HttpHeaders& headers;
-    KJ_HTTP_API kj::Own<kj::AsyncInputStream> body;
+    HttpMethod method;
+    kj::StringPtr url;
+    const HttpHeaders& headers;
+    kj::Own<kj::AsyncInputStream> body;
   };
   KJ_HTTP_API virtual kj::Promise<Request> readRequest() = 0;
   // Reads one HTTP request from the input stream.
@@ -517,9 +517,9 @@ public:
   // message read.
 
   struct KJ_HTTP_CLASS Connect {
-    KJ_HTTP_API kj::StringPtr authority;
-    KJ_HTTP_API const HttpHeaders& headers;
-    KJ_HTTP_API kj::Own<kj::AsyncInputStream> body;
+    kj::StringPtr authority;
+    const HttpHeaders& headers;
+    kj::Own<kj::AsyncInputStream> body;
   };
   KJ_HTTP_API virtual kj::Promise<kj::OneOf<Request, Connect>> readRequestAllowingConnect() = 0;
   // Reads one HTTP request from the input stream.
@@ -528,10 +528,10 @@ public:
   // message read.
 
   struct KJ_HTTP_CLASS Response {
-    KJ_HTTP_API uint statusCode;
-    KJ_HTTP_API kj::StringPtr statusText;
-    KJ_HTTP_API const HttpHeaders& headers;
-    KJ_HTTP_API kj::Own<kj::AsyncInputStream> body;
+    uint statusCode;
+    kj::StringPtr statusText;
+    const HttpHeaders& headers;
+    kj::Own<kj::AsyncInputStream> body;
   };
   KJ_HTTP_API virtual kj::Promise<Response> readResponse(HttpMethod requestMethod) = 0;
   // Reads one HTTP response from the input stream.
@@ -543,8 +543,8 @@ public:
   // message read.
 
   struct KJ_HTTP_CLASS Message {
-    KJ_HTTP_API const HttpHeaders& headers;
-    KJ_HTTP_API kj::Own<kj::AsyncInputStream> body;
+    const HttpHeaders& headers;
+    kj::Own<kj::AsyncInputStream> body;
   };
   KJ_HTTP_API virtual kj::Promise<Message> readMessage() = 0;
   // Reads an HTTP header set followed by a body, with no request or response line. This is not
@@ -572,10 +572,10 @@ struct KJ_HTTP_CLASS CompressionParameters {
   // These are the parameters for `Sec-WebSocket-Extensions` permessage-deflate extension.
   // Since we cannot distinguish the client/server in `upgradeToWebSocket`, we use the prefixes
   // `inbound` and `outbound` instead.
-  KJ_HTTP_API bool outboundNoContextTakeover = false;
-  KJ_HTTP_API bool inboundNoContextTakeover = false;
-  KJ_HTTP_API kj::Maybe<size_t> outboundMaxWindowBits = nullptr;
-  KJ_HTTP_API kj::Maybe<size_t> inboundMaxWindowBits = nullptr;
+  bool outboundNoContextTakeover = false;
+  bool inboundNoContextTakeover = false;
+  kj::Maybe<size_t> outboundMaxWindowBits = nullptr;
+  kj::Maybe<size_t> inboundMaxWindowBits = nullptr;
 };
 
 class KJ_HTTP_CLASS WebSocket {
@@ -620,24 +620,24 @@ public:
   struct KJ_HTTP_CLASS ProtocolError {
     // Represents a protocol error, such as a bad opcode or oversize message.
 
-    KJ_HTTP_API uint statusCode;
+    uint statusCode;
     // Suggested WebSocket status code that should be used when returning an error to the client.
     //
     // Most errors are 1002; an oversize message will be 1009.
 
-    KJ_HTTP_API kj::StringPtr description;
+    kj::StringPtr description;
     // An error description safe for all the world to see. This should be at most 123 bytes so that
     // it can be used as the body of a Close frame (RFC 6455 sections 5.5 and 5.5.1).
   };
 
   struct KJ_HTTP_CLASS Close {
-    KJ_HTTP_API uint16_t code;
-    KJ_HTTP_API kj::String reason;
+    uint16_t code;
+    kj::String reason;
   };
 
   typedef kj::OneOf<kj::String, kj::Array<byte>, Close> Message;
 
-  KJ_HTTP_API static constexpr size_t SUGGESTED_MAX_MESSAGE_SIZE = 1u << 20;  // 1MB
+  static constexpr size_t SUGGESTED_MAX_MESSAGE_SIZE = 1u << 20;  // 1MB
 
   KJ_HTTP_API virtual kj::Promise<Message> receive(size_t maxSize = SUGGESTED_MAX_MESSAGE_SIZE) = 0;
   // Read one message from the WebSocket and return it. Can only call once at a time. Do not call
@@ -681,7 +681,7 @@ public:
 
 using TlsStarterCallback = kj::Maybe<kj::Function<kj::Promise<void>(kj::StringPtr)>>;
 struct KJ_HTTP_CLASS HttpConnectSettings {
-  KJ_HTTP_API bool useTls = false;
+  bool useTls = false;
   // Requests to automatically establish a TLS session over the connection. The remote party
   // will be expected to present a valid certificate matching the requested hostname.
   kj::Maybe<TlsStarterCallback&> tlsStarter;
@@ -780,21 +780,21 @@ class KJ_HTTP_CLASS HttpClient {
 
 public:
   struct KJ_HTTP_CLASS Response {
-    KJ_HTTP_API uint statusCode;
-    KJ_HTTP_API kj::StringPtr statusText;
-    KJ_HTTP_API const HttpHeaders* headers;
-    KJ_HTTP_API kj::Own<kj::AsyncInputStream> body;
+    uint statusCode;
+    kj::StringPtr statusText;
+    const HttpHeaders* headers;
+    kj::Own<kj::AsyncInputStream> body;
     // `statusText` and `headers` remain valid until `body` is dropped or read from.
   };
 
   struct KJ_HTTP_CLASS Request {
-    KJ_HTTP_API kj::Own<kj::AsyncOutputStream> body;
+    kj::Own<kj::AsyncOutputStream> body;
     // Write the request entity body to this stream, then drop it when done.
     //
     // May be null for GET and HEAD requests (which have no body) and requests that have
     // Content-Length: 0.
 
-    KJ_HTTP_API kj::Promise<Response> response;
+    kj::Promise<Response> response;
     // Promise for the eventual response.
   };
 
@@ -814,10 +814,10 @@ public:
   // `Transfer-Encoding: chunked` will be used.
 
   struct KJ_HTTP_CLASS WebSocketResponse {
-    KJ_HTTP_API uint statusCode;
-    KJ_HTTP_API kj::StringPtr statusText;
-    KJ_HTTP_API const HttpHeaders* headers;
-    KJ_HTTP_API kj::OneOf<kj::Own<kj::AsyncInputStream>, kj::Own<WebSocket>> webSocketOrBody;
+    uint statusCode;
+    kj::StringPtr statusText;
+    const HttpHeaders* headers;
+    kj::OneOf<kj::Own<kj::AsyncInputStream>, kj::Own<WebSocket>> webSocketOrBody;
     // `statusText` and `headers` remain valid until `webSocketOrBody` is dropped or read from.
   };
   KJ_HTTP_API virtual kj::Promise<WebSocketResponse> openWebSocket(
@@ -829,10 +829,10 @@ public:
 
   struct KJ_HTTP_CLASS ConnectRequest {
     struct KJ_HTTP_CLASS Status {
-      KJ_HTTP_API uint statusCode;
-      KJ_HTTP_API kj::String statusText;
-      KJ_HTTP_API kj::Own<HttpHeaders> headers;
-      KJ_HTTP_API kj::Maybe<kj::Own<kj::AsyncInputStream>> errorBody;
+      uint statusCode;
+      kj::String statusText;
+      kj::Own<HttpHeaders> headers;
+      kj::Maybe<kj::Own<kj::AsyncInputStream>> errorBody;
       // If the connect request is rejected, the statusCode can be any HTTP status code
       // outside the 200-299 range and errorBody *may* be specified if there is a rejection
       // payload.
@@ -854,8 +854,8 @@ public:
             errorBody(kj::mv(errorBody)) {}
     };
 
-    KJ_HTTP_API kj::Promise<Status> status;
-    KJ_HTTP_API kj::Own<kj::AsyncIoStream> connection;
+    kj::Promise<Status> status;
+    kj::Own<kj::AsyncIoStream> connection;
   };
 
   KJ_HTTP_API virtual ConnectRequest connect(
@@ -1004,11 +1004,11 @@ public:
 };
 
 struct KJ_HTTP_CLASS HttpClientSettings {
-  KJ_HTTP_API kj::Duration idleTimeout = 5 * kj::SECONDS;
+  kj::Duration idleTimeout = 5 * kj::SECONDS;
   // For clients which automatically create new connections, any connection idle for at least this
   // long will be closed. Set this to 0 to prevent connection reuse entirely.
 
-  KJ_HTTP_API kj::Maybe<EntropySource&> entropySource = nullptr;
+  kj::Maybe<EntropySource&> entropySource = nullptr;
   // Must be provided in order to use `openWebSocket`. If you don't need WebSockets, this can be
   // omitted. The WebSocket protocol uses random values to avoid triggering flaws (including
   // security flaws) in certain HTTP proxy software. Specifically, entropy is used to generate the
@@ -1017,7 +1017,7 @@ struct KJ_HTTP_CLASS HttpClientSettings {
   // doesn't generate real entropy (e.g. returning the same value every time). Otherwise, you must
   // provide a cryptographically-random entropy source.
 
-  KJ_HTTP_API kj::Maybe<HttpClientErrorHandler&> errorHandler = nullptr;
+  kj::Maybe<HttpClientErrorHandler&> errorHandler = nullptr;
   // Customize how protocol errors are handled by the HttpClient. If null, HttpClientErrorHandler's
   // default implementation will be used.
 
@@ -1026,9 +1026,9 @@ struct KJ_HTTP_CLASS HttpClientSettings {
     MANUAL_COMPRESSION,    // Lets the application decide the compression configuration (if any).
     AUTOMATIC_COMPRESSION, // Automatically includes the compression header in the WebSocket request.
   };
-  KJ_HTTP_API WebSocketCompressionMode webSocketCompressionMode = NO_COMPRESSION;
+  WebSocketCompressionMode webSocketCompressionMode = NO_COMPRESSION;
 
-  KJ_HTTP_API kj::Maybe<SecureNetworkWrapper&> tlsContext;
+  kj::Maybe<SecureNetworkWrapper&> tlsContext;
   // A reference to a TLS context that will be used when tlsStarter is invoked.
 };
 
@@ -1137,7 +1137,7 @@ KJ_HTTP_API kj::Own<WebSocket> newWebSocket(kj::Own<kj::AsyncIoStream> stream,
 // protocol errors.
 
 struct KJ_HTTP_CLASS WebSocketPipe {
-  KJ_HTTP_API kj::Own<WebSocket> ends[2];
+  kj::Own<WebSocket> ends[2];
 };
 
 KJ_HTTP_API WebSocketPipe newWebSocketPipe();
@@ -1149,30 +1149,30 @@ class HttpServerErrorHandler;
 class HttpServerCallbacks;
 
 struct KJ_HTTP_CLASS HttpServerSettings {
-  KJ_HTTP_API kj::Duration headerTimeout = 15 * kj::SECONDS;
+  kj::Duration headerTimeout = 15 * kj::SECONDS;
   // After initial connection open, or after receiving the first byte of a pipelined request,
   // the client must send the complete request within this time.
 
-  KJ_HTTP_API kj::Duration pipelineTimeout = 5 * kj::SECONDS;
+  kj::Duration pipelineTimeout = 5 * kj::SECONDS;
   // After one request/response completes, we'll wait up to this long for a pipelined request to
   // arrive.
 
-  KJ_HTTP_API kj::Duration canceledUploadGracePeriod = 1 * kj::SECONDS;
-  KJ_HTTP_API size_t canceledUploadGraceBytes = 65536;
+  kj::Duration canceledUploadGracePeriod = 1 * kj::SECONDS;
+  size_t canceledUploadGraceBytes = 65536;
   // If the HttpService sends a response and returns without having read the entire request body,
   // then we have to decide whether to close the connection or wait for the client to finish the
   // request so that it can pipeline the next one. We'll give them a grace period defined by the
   // above two values -- if they hit either one, we'll close the socket, but if the request
   // completes, we'll let the connection stay open to handle more requests.
 
-  KJ_HTTP_API kj::Maybe<HttpServerErrorHandler&> errorHandler = nullptr;
+  kj::Maybe<HttpServerErrorHandler&> errorHandler = nullptr;
   // Customize how client protocol errors and service application exceptions are handled by the
   // HttpServer. If null, HttpServerErrorHandler's default implementation will be used.
 
-  KJ_HTTP_API kj::Maybe<HttpServerCallbacks&> callbacks = nullptr;
+  kj::Maybe<HttpServerCallbacks&> callbacks = nullptr;
   // Additional optional callbacks used to control some server behavior.
 
-  KJ_HTTP_API kj::Maybe<WebSocketErrorHandler&> webSocketErrorHandler = nullptr;
+  kj::Maybe<WebSocketErrorHandler&> webSocketErrorHandler = nullptr;
   // Customize exceptions thrown on WebSocket protocol errors.
 
   enum WebSocketCompressionMode {
@@ -1180,7 +1180,7 @@ struct KJ_HTTP_CLASS HttpServerSettings {
     MANUAL_COMPRESSION,    // Gives the application more control when considering whether to compress.
     AUTOMATIC_COMPRESSION, // Will perform compression parameter negotiation if client requests it.
   };
-  KJ_HTTP_API WebSocketCompressionMode webSocketCompressionMode = NO_COMPRESSION;
+  WebSocketCompressionMode webSocketCompressionMode = NO_COMPRESSION;
 };
 
 class KJ_HTTP_CLASS HttpServerErrorHandler {
@@ -1369,9 +1369,9 @@ class KJ_HTTP_CLASS HttpServer::SuspendableRequest {
   // Interface passed to the SuspendableHttpServiceFactory parameter of listenHttpCleanDrain().
 
 public:
-  KJ_HTTP_API kj::OneOf<HttpMethod,HttpConnectMethod> method;
-  KJ_HTTP_API kj::StringPtr url;
-  KJ_HTTP_API const HttpHeaders& headers;
+  kj::OneOf<HttpMethod,HttpConnectMethod> method;
+  kj::StringPtr url;
+  const HttpHeaders& headers;
   // Parsed request front matter, so the implementer can decide whether to suspend the request.
 
   KJ_HTTP_API SuspendedRequest suspend();
@@ -1469,8 +1469,8 @@ KJ_HTTP_API kj::Vector<kj::ArrayPtr<const char>> splitParts(kj::ArrayPtr<const c
                                                             char delim);
 
 struct KJ_HTTP_CLASS KeyMaybeVal {
-  KJ_HTTP_API ArrayPtr<const char> key;
-  KJ_HTTP_API kj::Maybe<ArrayPtr<const char>> val;
+  ArrayPtr<const char> key;
+  kj::Maybe<ArrayPtr<const char>> val;
 };
 
 KJ_HTTP_API kj::Array<KeyMaybeVal> toKeysAndVals(
@@ -1480,10 +1480,10 @@ struct KJ_HTTP_CLASS UnverifiedConfig {
   // An intermediate representation of the final `CompressionParameters` struct; used during parsing.
   // We use it to ensure the structure of an offer is generally correct, see
   // `populateUnverifiedConfig()` for details.
-  KJ_HTTP_API bool clientNoContextTakeover = false;
-  KJ_HTTP_API bool serverNoContextTakeover = false;
-  KJ_HTTP_API kj::Maybe<ArrayPtr<const char>> clientMaxWindowBits = nullptr;
-  KJ_HTTP_API kj::Maybe<ArrayPtr<const char>> serverMaxWindowBits = nullptr;
+  bool clientNoContextTakeover = false;
+  bool serverNoContextTakeover = false;
+  kj::Maybe<ArrayPtr<const char>> clientMaxWindowBits = nullptr;
+  kj::Maybe<ArrayPtr<const char>> serverMaxWindowBits = nullptr;
 };
 
 KJ_HTTP_API kj::Maybe<UnverifiedConfig> populateUnverifiedConfig(kj::Array<KeyMaybeVal>& params);

@@ -85,11 +85,11 @@ public:
     //
     // Use `parseStatement()` to avoid having to deal with this struct.
 
-    CAPNP_CAPNPC_API Orphan<Declaration> decl;
+    Orphan<Declaration> decl;
     // The decl parsed so far.  The decl's `docComment` and `nestedDecls` are both empty at this
     // point.
 
-    CAPNP_CAPNPC_API kj::Maybe<DeclParser> memberParser;
+    kj::Maybe<DeclParser> memberParser;
     // If null, the statement should not have a block.  If non-null, the statement should have a
     // block containing statements parseable by this parser.
 
@@ -100,38 +100,38 @@ public:
   };
 
   struct CAPNP_CAPNPC_CLASS Parsers {
-    CAPNP_CAPNPC_API DeclParser genericDecl;
+    DeclParser genericDecl;
     // Parser that matches any declaration type except those that have ordinals (since they are
     // context-dependent).
 
-    CAPNP_CAPNPC_API DeclParser fileLevelDecl;
-    CAPNP_CAPNPC_API DeclParser enumLevelDecl;
-    CAPNP_CAPNPC_API DeclParser structLevelDecl;
-    CAPNP_CAPNPC_API DeclParser interfaceLevelDecl;
+    DeclParser fileLevelDecl;
+    DeclParser enumLevelDecl;
+    DeclParser structLevelDecl;
+    DeclParser interfaceLevelDecl;
     // Parsers that match genericDecl *and* the ordinal-based declaration types valid in the given
     // contexts.  Note that these may match declarations that are not actually allowed in the given
     // contexts, as long as the grammar is unambiguous.  E.g. nested types are not allowed in
     // enums, but they'll be accepted by enumLevelDecl.  A later stage of compilation should report
     // these as errors.
 
-    CAPNP_CAPNPC_API Parser<Orphan<Expression>> expression;
-    CAPNP_CAPNPC_API Parser<Orphan<Declaration::AnnotationApplication>> annotation;
-    CAPNP_CAPNPC_API Parser<Orphan<LocatedInteger>> uid;
-    CAPNP_CAPNPC_API Parser<Orphan<LocatedInteger>> ordinal;
-    CAPNP_CAPNPC_API Parser<Orphan<Declaration::Param>> param;
+    Parser<Orphan<Expression>> expression;
+    Parser<Orphan<Declaration::AnnotationApplication>> annotation;
+    Parser<Orphan<LocatedInteger>> uid;
+    Parser<Orphan<LocatedInteger>> ordinal;
+    Parser<Orphan<Declaration::Param>> param;
 
-    CAPNP_CAPNPC_API DeclParser usingDecl;
-    CAPNP_CAPNPC_API DeclParser constDecl;
-    CAPNP_CAPNPC_API DeclParser enumDecl;
-    CAPNP_CAPNPC_API DeclParser enumerantDecl;
-    CAPNP_CAPNPC_API DeclParser structDecl;
-    CAPNP_CAPNPC_API DeclParser fieldDecl;
-    CAPNP_CAPNPC_API DeclParser unionDecl;
-    CAPNP_CAPNPC_API DeclParser groupDecl;
-    CAPNP_CAPNPC_API DeclParser interfaceDecl;
-    CAPNP_CAPNPC_API DeclParser methodDecl;
-    CAPNP_CAPNPC_API DeclParser paramDecl;
-    CAPNP_CAPNPC_API DeclParser annotationDecl;
+    DeclParser usingDecl;
+    DeclParser constDecl;
+    DeclParser enumDecl;
+    DeclParser enumerantDecl;
+    DeclParser structDecl;
+    DeclParser fieldDecl;
+    DeclParser unionDecl;
+    DeclParser groupDecl;
+    DeclParser interfaceDecl;
+    DeclParser methodDecl;
+    DeclParser paramDecl;
+    DeclParser annotationDecl;
     // Parsers for individual declaration types.
   };
 

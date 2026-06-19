@@ -350,14 +350,14 @@ public:
     CAPNP_RPC_API virtual size_t getWindow() = 0;
   };
 
-  CAPNP_RPC_API static kj::Own<RpcFlowController> newVariableWindowController(WindowGetter& getter);
+  static kj::Own<RpcFlowController> newVariableWindowController(WindowGetter& getter);
   // Like newFixedWindowController(), but the window size is allowed to vary over time. Useful if
   // you have a technique for estimating one good window size for the connection as a whole but not
   // for individual streams. Keep in mind, though, that in situations where the other end of the
   // connection is merely proxying capabilities from a variety of final destinations across a
   // variety of networks, no single window will be appropriate for all streams.
 
-  CAPNP_RPC_API static constexpr size_t DEFAULT_WINDOW_SIZE = 65536;
+  static constexpr size_t DEFAULT_WINDOW_SIZE = 65536;
   // The window size used by the default implementation of Connection::newStream().
 };
 

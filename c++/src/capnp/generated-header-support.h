@@ -375,7 +375,7 @@ inline constexpr uint sizeInWords() {
 
 #define CAPNP_DECLARE_SCHEMA(id) \
     extern ::capnp::word const* const bp_##id; \
-    CAPNP_API extern const ::capnp::_::RawSchema s_##id
+    CAPNP_CLASS extern const ::capnp::_::RawSchema s_##id
 
 #define CAPNP_DECLARE_ENUM(type, id) \
     inline ::kj::String KJ_STRINGIFY(type##_##id value) { \

@@ -53,15 +53,15 @@ public:
   CAPNP_CAPNPC_API ~NodeTranslator() noexcept(false);
 
   struct CAPNP_CAPNPC_CLASS NodeSet {
-    CAPNP_CAPNPC_API schema::Node::Reader node;
+    schema::Node::Reader node;
     // The main node.
 
-    CAPNP_CAPNPC_API kj::Array<schema::Node::Reader> auxNodes;
+    kj::Array<schema::Node::Reader> auxNodes;
     // Auxiliary nodes that were produced when translating this node and should be loaded along
     // with it.  In particular, structs that contain groups (or named unions) spawn extra nodes
     // representing those, and interfaces spawn struct nodes representing method params/results.
 
-    CAPNP_CAPNPC_API kj::Array<schema::Node::SourceInfo::Reader> sourceInfo;
+    kj::Array<schema::Node::SourceInfo::Reader> sourceInfo;
     // The SourceInfo for the node and all aux nodes.
   };
 

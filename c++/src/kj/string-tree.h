@@ -154,10 +154,10 @@ inline auto toStringTreeOrCharSequence(T&& value)
 }  // namespace _ (private)
 
 struct KJ_CLASS StringTree::Branch {
-  KJ_API size_t index;
+  size_t index;
   // Index in `text` where this branch should be inserted.
 
-  KJ_API StringTree content;
+  StringTree content;
 };
 
 template <typename Func>

@@ -35,16 +35,16 @@ namespace capnp {
 namespace compiler {
 
 struct CAPNP_CAPNPC_CLASS Resolution {
-  CAPNP_CAPNPC_API uint32_t startByte;
-  CAPNP_CAPNPC_API uint32_t endByte;
+  uint32_t startByte;
+  uint32_t endByte;
 
-  struct CAPNP_CAPNPC_CLASS Type { CAPNP_CAPNPC_API uint64_t typeId; };
+  struct CAPNP_CAPNPC_CLASS Type { uint64_t typeId; };
   struct CAPNP_CAPNPC_CLASS Member {
-    CAPNP_CAPNPC_API uint64_t parentTypeId;
-    CAPNP_CAPNPC_API uint16_t ordinal;
+    uint64_t parentTypeId;
+    uint16_t ordinal;
   };
 
-  CAPNP_CAPNPC_API kj::OneOf<Type, Member> target;
+  kj::OneOf<Type, Member> target;
 };
 
 class CAPNP_CAPNPC_CLASS ErrorReporter {
@@ -84,9 +84,9 @@ class CAPNP_CAPNPC_CLASS GlobalErrorReporter {
 
 public:
   struct CAPNP_CAPNPC_CLASS SourcePos {
-    CAPNP_CAPNPC_API uint byte;
-    CAPNP_CAPNPC_API uint line;
-    CAPNP_CAPNPC_API uint column;
+    uint byte;
+    uint line;
+    uint column;
   };
 
   CAPNP_CAPNPC_API virtual void addError(const kj::ReadableDirectory& directory, kj::PathPtr path,

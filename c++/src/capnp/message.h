@@ -51,7 +51,7 @@ class Orphan;
 struct CAPNP_CLASS ReaderOptions {
   // Options controlling how data is read.
 
-  CAPNP_API uint64_t traversalLimitInWords = 8 * 1024 * 1024;
+  uint64_t traversalLimitInWords = 8 * 1024 * 1024;
   // Limits how many total words of data are allowed to be traversed.  Traversal is counted when
   // a new struct or list builder is obtained, e.g. from a get() accessor.  This means that calling
   // the getter for the same sub-struct multiple times will cause it to be double-counted.  Once
@@ -72,7 +72,7 @@ struct CAPNP_CLASS ReaderOptions {
   // but probably at least prevents easy exploitation while also avoiding causing problems in most
   // typical cases.
 
-  CAPNP_API int nestingLimit = 64;
+  int nestingLimit = 64;
   // Limits how deeply-nested a message structure can be, e.g. structs containing other structs or
   // lists of structs.
   //
@@ -163,9 +163,9 @@ public:
   KJ_DISALLOW_COPY_AND_MOVE(MessageBuilder);
 
   struct CAPNP_CLASS SegmentInit {
-    CAPNP_API kj::ArrayPtr<word> space;
+    kj::ArrayPtr<word> space;
 
-    CAPNP_API size_t wordsUsed;
+    size_t wordsUsed;
     // Number of words in `space` which are used; the rest are free space in which additional
     // objects may be allocated.
   };
@@ -369,8 +369,8 @@ enum class CAPNP_CLASS AllocationStrategy: uint8_t {
   // allocated for a message of size n is O(log n).
 };
 
-CAPNP_API constexpr uint SUGGESTED_FIRST_SEGMENT_WORDS = 1024;
-CAPNP_API constexpr AllocationStrategy SUGGESTED_ALLOCATION_STRATEGY =
+constexpr uint SUGGESTED_FIRST_SEGMENT_WORDS = 1024;
+constexpr AllocationStrategy SUGGESTED_ALLOCATION_STRATEGY =
     AllocationStrategy::GROW_HEURISTICALLY;
 
 class CAPNP_CLASS MallocMessageBuilder: public MessageBuilder {

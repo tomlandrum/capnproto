@@ -113,7 +113,7 @@ struct KJ_CLASS HashCoder {
   template <typename T, typename Result = decltype(instance<T>().hashCode())>
   inline Result operator*(T&& value) const { return kj::fwd<T>(value).hashCode(); }
 };
-KJ_API static KJ_CONSTEXPR(const) HashCoder HASHCODER = HashCoder();
+static KJ_CONSTEXPR(const) HashCoder HASHCODER = HashCoder();
 
 }  // namespace _ (private)
 

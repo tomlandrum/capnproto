@@ -633,11 +633,11 @@ private:
 class CAPNP_CLASS Type {
 public:
   struct BrandParameter {
-    CAPNP_API uint64_t scopeId;
-    CAPNP_API uint index;
+    uint64_t scopeId;
+    uint index;
   };
   struct CAPNP_CLASS ImplicitParameter {
-    CAPNP_API uint index;
+    uint index;
   };
 
   CAPNP_API inline Type();

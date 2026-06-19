@@ -195,19 +195,19 @@ constexpr inline auto charsToString(SubParser&& subParser)
 // =======================================================================================
 // Basic character classes.
 
-KJ_API constexpr auto alpha = charRange('a', 'z').orRange('A', 'Z');
-KJ_API constexpr auto digit = charRange('0', '9');
-KJ_API constexpr auto alphaNumeric = alpha.orGroup(digit);
-KJ_API constexpr auto nameStart = alpha.orChar('_');
-KJ_API constexpr auto nameChar = alphaNumeric.orChar('_');
-KJ_API constexpr auto hexDigit = charRange('0', '9').orRange('a', 'f').orRange('A', 'F');
-KJ_API constexpr auto octDigit = charRange('0', '7');
-KJ_API constexpr auto whitespaceChar = anyOfChars(" \f\n\r\t\v");
-KJ_API constexpr auto controlChar = charRange(0, 0x1f).invert().orGroup(whitespaceChar).invert();
+constexpr auto alpha = charRange('a', 'z').orRange('A', 'Z');
+constexpr auto digit = charRange('0', '9');
+constexpr auto alphaNumeric = alpha.orGroup(digit);
+constexpr auto nameStart = alpha.orChar('_');
+constexpr auto nameChar = alphaNumeric.orChar('_');
+constexpr auto hexDigit = charRange('0', '9').orRange('a', 'f').orRange('A', 'F');
+constexpr auto octDigit = charRange('0', '7');
+constexpr auto whitespaceChar = anyOfChars(" \f\n\r\t\v");
+constexpr auto controlChar = charRange(0, 0x1f).invert().orGroup(whitespaceChar).invert();
 
-KJ_API constexpr auto whitespace = many(anyOfChars(" \f\n\r\t\v"));
+constexpr auto whitespace = many(anyOfChars(" \f\n\r\t\v"));
 
-KJ_API constexpr auto discardWhitespace = discard(many(discard(anyOfChars(" \f\n\r\t\v"))));
+constexpr auto discardWhitespace = discard(many(discard(anyOfChars(" \f\n\r\t\v"))));
 // Like discard(whitespace) but avoids some memory allocation.
 
 // =======================================================================================
@@ -227,7 +227,7 @@ struct IdentifierToString {
 
 }  // namespace _ (private)
 
-KJ_API constexpr auto identifier = transform(sequence(nameStart, many(nameChar)),
+constexpr auto identifier = transform(sequence(nameStart, many(nameChar)),
                                              _::IdentifierToString());
 // Parses an identifier (e.g. a C variable name).
 
@@ -259,7 +259,7 @@ struct ParseInteger {
 
 }  // namespace _ (private)
 
-KJ_API constexpr auto integer = sequence(
+constexpr auto integer = sequence(
     oneOf(
       transform(sequence(exactChar<'0'>(), exactChar<'x'>(), oneOrMore(hexDigit)), _::ParseInteger<16>()),
       transform(sequence(exactChar<'0'>(), many(octDigit)), _::ParseInteger<8>()),
@@ -279,7 +279,7 @@ struct KJ_CLASS ParseFloat {
 
 }  // namespace _ (private)
 
-KJ_API constexpr auto number = transform(
+constexpr auto number = transform(
     sequence(
         oneOrMore(digit),
         optional(sequence(exactChar<'.'>(), many(digit))),
@@ -334,7 +334,7 @@ struct ParseOctEscape {
 
 }  // namespace _ (private)
 
-KJ_API constexpr auto escapeSequence =
+constexpr auto escapeSequence =
     sequence(exactChar<'\\'>(), oneOf(
         transform(anyOfChars("abfnrtv'\"\\\?"), _::InterpretEscape()),
         transform(sequence(exactChar<'x'>(), hexDigit, hexDigit), _::ParseHexEscape()),
@@ -343,19 +343,19 @@ KJ_API constexpr auto escapeSequence =
 // A parser that parses a C-string-style escape sequence (starting with a backslash).  Returns
 // a char.
 
-KJ_API constexpr auto doubleQuotedString = charsToString(sequence(
+constexpr auto doubleQuotedString = charsToString(sequence(
     exactChar<'\"'>(),
     many(oneOf(anyOfChars("\\\n\"").invert(), escapeSequence)),
     exactChar<'\"'>()));
 // Parses a C-style double-quoted string.
 
-KJ_API constexpr auto singleQuotedString = charsToString(sequence(
+constexpr auto singleQuotedString = charsToString(sequence(
     exactChar<'\''>(),
     many(oneOf(anyOfChars("\\\n\'").invert(), escapeSequence)),
     exactChar<'\''>()));
 // Parses a C-style single-quoted string.
 
-KJ_API constexpr auto doubleQuotedHexBinary = sequence(
+constexpr auto doubleQuotedHexBinary = sequence(
     exactChar<'0'>(), exactChar<'x'>(), exactChar<'\"'>(),
     oneOrMore(transform(sequence(discardWhitespace, hexDigit, hexDigit), _::ParseHexByte())),
     discardWhitespace,

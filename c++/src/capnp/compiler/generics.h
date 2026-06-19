@@ -49,7 +49,7 @@ struct CAPNP_CAPNPC_CLASS ImplicitParams {
   //
   // Here, `T` is an implicit parameter.
 
-  CAPNP_CAPNPC_API uint64_t scopeId;
+  uint64_t scopeId;
   // If zero, then any reference to an implicit param in this context should be compiled to a
   // `implicitMethodParam` AnyPointer. If non-zero, it should be compiled to a `parameter`
   // AnyPointer using this scopeId. This comes into play when compiling the implicitly-generated
@@ -60,7 +60,7 @@ struct CAPNP_CAPNPC_CLASS ImplicitParams {
   // TODO(cleanup): Unclear why ImplicitParams is even used when compiling the implicit structs
   //   with explicit params. Missing abstraction?
 
-  CAPNP_CAPNPC_API List<Declaration::BrandParameter>::Reader params;
+  List<Declaration::BrandParameter>::Reader params;
   // Name and metadata about the parameter declaration.
 
   CAPNP_CAPNPC_API static inline ImplicitParams none() {

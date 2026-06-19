@@ -67,7 +67,7 @@ struct Id {
 // Quantity and UnitRatio -- implement unit analysis via the type system
 
 struct KJ_CLASS Unsafe_ {};
-KJ_API constexpr Unsafe_ unsafe = Unsafe_();
+constexpr Unsafe_ unsafe = Unsafe_();
 // Use as a parameter to constructors that are unsafe to indicate that you really do mean it.
 
 template <uint64_t maxN, typename T>
