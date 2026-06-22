@@ -117,7 +117,7 @@ static KJ_CONSTEXPR(const) HashCoder HASHCODER = HashCoder();
 
 }  // namespace _ (private)
 
-#define KJ_HASHCODE(...) KJ_API operator*(::kj::_::HashCoder, __VA_ARGS__)
+#define KJ_HASHCODE(...) operator*(::kj::_::HashCoder, __VA_ARGS__)
 // Defines a hash function for a custom type.  Example:
 //
 //    class Foo {...};

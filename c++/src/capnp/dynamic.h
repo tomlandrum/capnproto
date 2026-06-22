@@ -536,7 +536,7 @@ public:
   typedef DynamicCapability Serves;
 
   struct CAPNP_CLASS Options {
-    CAPNP_API bool allowCancellation = false;
+    bool allowCancellation = false;
     // See the `allowCancellation` annotation defined in `c++.capnp`.
     //
     // This option applies to all calls made to this server object. The annotation in the schema

@@ -34,7 +34,7 @@ namespace capnp {
 
 namespace _ {
 
-void setGlobalBrokenCapFactoryForLayoutCpp(BrokenCapFactory& factory);
+CAPNP_API void setGlobalBrokenCapFactoryForLayoutCpp(BrokenCapFactory& factory);
 // Defined in layout.c++.
 
 }  // namespace _

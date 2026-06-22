@@ -410,11 +410,11 @@ private:
   friend class EventLoop;
 };
 
-KJ_ASYNC_API constexpr _::ReadyNow READY_NOW = _::ReadyNow();
+constexpr _::ReadyNow READY_NOW = _::ReadyNow();
 // Use this when you need a Promise<void> that is already fulfilled -- this value can be implicitly
 // cast to `Promise<void>`.
 
-KJ_ASYNC_API constexpr _::NeverDone NEVER_DONE = _::NeverDone();
+constexpr _::NeverDone NEVER_DONE = _::NeverDone();
 // The opposite of `READY_NOW`, return this when the promise should never resolve.  This can be
 // implicitly converted to any promise type.  You may also call `NEVER_DONE.wait()` to wait
 // forever (useful for servers).
