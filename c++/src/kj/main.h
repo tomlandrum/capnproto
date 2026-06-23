@@ -171,7 +171,7 @@ KJ_API int runMainAndExit(ProcessContext& context, MainFunc&& func, int argc, ch
 // Most users will use the KJ_MAIN() macro rather than call this function directly.
 
 #define KJ_MAIN(MainClass) \
-  KJ_API int main(int argc, char* argv[]) { \
+  int main(int argc, char* argv[]) { \
     ::kj::TopLevelProcessContext context(argv[0]); \
     MainClass mainObject(context); \
     return ::kj::runMainAndExit(context, mainObject.getMain(), argc, argv); \

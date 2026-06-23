@@ -151,7 +151,7 @@ public:
     virtual bool check() = 0;
   };
 
-  void wait(Predicate& predicate, Maybe<Duration> timeout, LockSourceLocationArg location);
+  KJ_API void wait(Predicate& predicate, Maybe<Duration> timeout, LockSourceLocationArg location);
   // If predicate.check() returns false, unlock the mutex until predicate.check() returns true, or
   // when the timeout (if any) expires. The mutex is always re-locked when this returns regardless
   // of whether the timeout expired, and including if it throws.

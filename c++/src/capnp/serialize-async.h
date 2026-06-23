@@ -31,13 +31,13 @@ CAPNP_BEGIN_HEADER
 namespace capnp {
 
 struct CAPNP_RPC_CLASS MessageReaderAndFds {
-  CAPNP_RPC_API kj::Own<MessageReader> reader;
-  CAPNP_RPC_API kj::ArrayPtr<kj::AutoCloseFd> fds;
+  kj::Own<MessageReader> reader;
+  kj::ArrayPtr<kj::AutoCloseFd> fds;
 };
 
 struct CAPNP_RPC_CLASS MessageAndFds {
-  CAPNP_RPC_API kj::ArrayPtr<const kj::ArrayPtr<const word>> segments;
-  CAPNP_RPC_API kj::ArrayPtr<const int> fds;
+  kj::ArrayPtr<const kj::ArrayPtr<const word>> segments;
+  kj::ArrayPtr<const int> fds;
 };
 
 class CAPNP_RPC_CLASS MessageStream {

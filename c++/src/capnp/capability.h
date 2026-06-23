@@ -510,7 +510,7 @@ public:
   // returns that FD. When FD passing has been enabled in the RPC layer, this FD may be sent to
   // other processes along with the capability.
 
-  CAPNP_API virtual kj::Maybe<kj::Promise<Capability::Client>> shortenPath();
+  virtual kj::Maybe<kj::Promise<Capability::Client>> shortenPath();
   // If this returns non-null, then it is a promise which, when resolved, points to a new
   // capability to which future calls can be sent. Use this in cases where an object implementation
   // might discover a more-optimized path some time after it starts.
@@ -531,7 +531,7 @@ public:
   //   a proxy.
 
 protected:
-  CAPNP_API inline Capability::Client thisCap();
+  inline Capability::Client thisCap();
   // Get a capability pointing to this object, much like the `this` keyword.
   //
   // The effect of this method is undefined if:
@@ -549,11 +549,11 @@ protected:
   template <typename Params>
   StreamingCallContext<Params> internalGetTypedStreamingContext(
       CallContext<AnyPointer, AnyPointer> typeless);
-  CAPNP_API DispatchCallResult internalUnimplemented(const char* actualInterfaceName,
+  DispatchCallResult internalUnimplemented(const char* actualInterfaceName,
                                                      uint64_t requestedTypeId);
-  CAPNP_API DispatchCallResult internalUnimplemented(const char* interfaceName,
+  DispatchCallResult internalUnimplemented(const char* interfaceName,
                                                      uint64_t typeId, uint16_t methodId);
-  CAPNP_API kj::Promise<void> internalUnimplemented(const char* interfaceName,
+  kj::Promise<void> internalUnimplemented(const char* interfaceName,
                                                     const char* methodName,
                                                     uint64_t typeId, uint16_t methodId);
 
@@ -685,7 +685,7 @@ namespace _ {  // private
 
 class CAPNP_CLASS CapabilityServerSetBase {
 public:
-  CAPNP_API Capability::Client addInternal(kj::Own<Capability::Server>&& server, void* ptr);
+  Capability::Client addInternal(kj::Own<Capability::Server>&& server, void* ptr);
   CAPNP_API kj::Promise<void*> getLocalServerInternal(Capability::Client& client);
 };
 

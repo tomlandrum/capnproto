@@ -549,7 +549,7 @@ public:
   CAPNP_API virtual kj::Promise<void> call(InterfaceSchema::Method method,
                                            CallContext<DynamicStruct, DynamicStruct> context) = 0;
 
-  CAPNP_API DispatchCallResult dispatchCall(uint64_t interfaceId, uint16_t methodId,
+  DispatchCallResult dispatchCall(uint64_t interfaceId, uint16_t methodId,
       CallContext<AnyPointer, AnyPointer> context) override final;
 
   CAPNP_API inline InterfaceSchema getSchema() const { return schema; }

@@ -436,8 +436,8 @@ public:
     KJ_API void init(const char* file, int line, int osErrorNumber,
                      const char* condition, const char* macroArgs, ArrayPtr<String> argValues);
 #if _WIN32 || __CYGWIN__
-    void init(const char* file, int line, Win32Result osErrorNumber,
-              const char* condition, const char* macroArgs, ArrayPtr<String> argValues);
+    KJ_API void init(const char* file, int line, Win32Result osErrorNumber,
+                     const char* condition, const char* macroArgs, ArrayPtr<String> argValues);
 #endif
 
     Exception* exception;
@@ -462,7 +462,7 @@ public:
   static Win32Result win32Call(int boolean);
   static Win32Result win32Call(void* handle);
   static Win32Result winsockCall(int result);
-  static uint getWin32ErrorCode();
+  KJ_API static uint getWin32ErrorCode();
 #endif
 
   class KJ_CLASS Context: public ExceptionCallback {
@@ -517,7 +517,7 @@ private:
                                  const char* macroArgs, ArrayPtr<String> argValues);
   KJ_API static String makeDescriptionInternal(const char* macroArgs, ArrayPtr<String> argValues);
 
-  static int getOsErrorNumber(bool nonblocking);
+  KJ_API static int getOsErrorNumber(bool nonblocking);
   // Get the error code of the last error (e.g. from errno).  Returns -1 on EINTR.
 };
 

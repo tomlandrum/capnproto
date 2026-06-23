@@ -78,7 +78,7 @@ private:
   mutable uint refcount = 0;
   // "mutable" because disposeImpl() is const.  Bleh.
 
-  void disposeImpl(void* pointer) const override;
+  KJ_API void disposeImpl(void* pointer) const override;
   template <typename T>
   static Own<T> addRefInternal(T* object);
 
@@ -205,7 +205,7 @@ private:
 
   bool addRefWeakInternal() const;
 
-  void disposeImpl(void* pointer) const override;
+  KJ_API void disposeImpl(void* pointer) const override;
   template <typename T>
   static kj::Own<T> addRefInternal(T* object);
   template <typename T>

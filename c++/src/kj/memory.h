@@ -164,7 +164,7 @@ class KJ_CLASS NullDisposer: public Disposer {
   // A disposer that does nothing.
 
 public:
-  static const NullDisposer instance;
+  KJ_API static const NullDisposer instance;
 
   KJ_API void disposeImpl(void* pointer) const override {}
 };

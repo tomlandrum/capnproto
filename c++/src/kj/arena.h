@@ -110,7 +110,7 @@ private:
   // Try to allocate the given number of bytes without taking a lock.  Fails if and only if there
   // is no space left in the current chunk.
 
-  void setDestructor(void* ptr, void (*destructor)(void*));
+  KJ_API void setDestructor(void* ptr, void (*destructor)(void*));
   // Schedule the given destructor to be executed when the Arena is destroyed.  `ptr` must be a
   // pointer previously returned by an `allocateBytes()` call for which `hasDisposer` was true.
 
