@@ -510,7 +510,7 @@ public:
   // returns that FD. When FD passing has been enabled in the RPC layer, this FD may be sent to
   // other processes along with the capability.
 
-  virtual kj::Maybe<kj::Promise<Capability::Client>> shortenPath();
+  CAPNP_API virtual kj::Maybe<kj::Promise<Capability::Client>> shortenPath();
   // If this returns non-null, then it is a promise which, when resolved, points to a new
   // capability to which future calls can be sent. Use this in cases where an object implementation
   // might discover a more-optimized path some time after it starts.
@@ -685,7 +685,7 @@ namespace _ {  // private
 
 class CAPNP_CLASS CapabilityServerSetBase {
 public:
-  Capability::Client addInternal(kj::Own<Capability::Server>&& server, void* ptr);
+  CAPNP_API Capability::Client addInternal(kj::Own<Capability::Server>&& server, void* ptr);
   CAPNP_API kj::Promise<void*> getLocalServerInternal(Capability::Client& client);
 };
 
