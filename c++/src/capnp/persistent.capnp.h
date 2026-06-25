@@ -133,7 +133,7 @@ class Persistent<SturdyRef, Owner>::Server
 public:
   typedef Persistent Serves;
 
-  ::capnp::Capability::Server::DispatchCallResult dispatchCall(
+  CAPNP_API ::capnp::Capability::Server::DispatchCallResult dispatchCall(
       uint64_t interfaceId, uint16_t methodId,
       ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context)
       override;
@@ -558,7 +558,7 @@ template <typename SturdyRef, typename Owner>
       0xc8cb212fcd9f5691ull, 0);
 }
 template <typename SturdyRef, typename Owner>
-::capnp::Capability::Server::DispatchCallResult Persistent<SturdyRef, Owner>::Server::dispatchCall(
+CAPNP_API ::capnp::Capability::Server::DispatchCallResult Persistent<SturdyRef, Owner>::Server::dispatchCall(
     uint64_t interfaceId, uint16_t methodId,
     ::capnp::CallContext< ::capnp::AnyPointer, ::capnp::AnyPointer> context) {
   switch (interfaceId) {

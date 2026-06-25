@@ -19,6 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#include "export-capnp.h"
 #include "byte-stream.h"
 #include <kj/one-of.h>
 #include <kj/debug.h>
@@ -166,7 +167,7 @@ public:
   // ---------------------------------------------------------------------------
   // implements ByteStream::Server RPC interface
 
-  kj::Maybe<kj::Promise<Capability::Client>> shortenPath() override {
+  CAPNP_API kj::Maybe<kj::Promise<Capability::Client>> shortenPath() override {
     return resolvePromise.addBranch()
         .then([this]() -> Capability::Client {
       return state.get<Redirected>().replacement;
@@ -563,7 +564,7 @@ protected:
   // ---------------------------------------------------------------------------
   // implements ByteStream::Server RPC interface
 
-  kj::Maybe<kj::Promise<Capability::Client>> shortenPath() override {
+  CAPNP_API kj::Maybe<kj::Promise<Capability::Client>> shortenPath() override {
     return shortenPathImpl();
   }
   kj::Promise<Capability::Client> shortenPathImpl() {
